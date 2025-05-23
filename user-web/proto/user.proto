@@ -1,0 +1,37 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+option go_package = ".;proto";
+service User{
+    rpc GetUserById(UserInfoResponse) returns(UserInfoResponse);//通过id查询用户
+    rpc CreateUser(CreateUserInfo) returns(UserInfoResponse);//用户注册
+    rpc CheckPassword(PasswordCheckInfo) returns(CheckReponse);
+}
+message PasswordCheckInfo{
+    string password = 1;
+    string encryptedPassword = 2;
+}
+message CheckReponse {
+    bool success = 1;
+}
+
+
+message CreateUserInfo{
+   
+   string nickName = 1;
+   string passWord = 2;
+   string mobile = 3;
+   string like = 4;
+   string like_embedding = 5;
+   int32 user_id = 6;
+}
+
+
+message UserInfoResponse{
+    int32 id = 1;
+    string password = 2;
+    string like = 3;
+    string nickName = 4;
+    string gender = 6;
+    uint32 role = 7; 
+    string like_embedding = 8;
+}
