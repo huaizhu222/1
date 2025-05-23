@@ -19,14 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	System_SendFile_FullMethodName = "/system.System/SendFile"
+	System_SendFile_FullMethodName = "/System/SendFile"
 )
 
 // SystemClient is the client API for System service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SystemClient interface {
-	SendFile(ctx context.Context, in *SendFileRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[SendFileResponse], error)
+	SendFile(ctx context.Context, in *FileRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[FileResponse], error)
 }
 
 type systemClient struct {
@@ -37,13 +37,13 @@ func NewSystemClient(cc grpc.ClientConnInterface) SystemClient {
 	return &systemClient{cc}
 }
 
-func (c *systemClient) SendFile(ctx context.Context, in *SendFileRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[SendFileResponse], error) {
+func (c *systemClient) SendFile(ctx context.Context, in *FileRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[FileResponse], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &System_ServiceDesc.Streams[0], System_SendFile_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[SendFileRequest, SendFileResponse]{ClientStream: stream}
+	x := &grpc.GenericClientStream[FileRequest, FileResponse]{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -54,13 +54,13 @@ func (c *systemClient) SendFile(ctx context.Context, in *SendFileRequest, opts .
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type System_SendFileClient = grpc.ServerStreamingClient[SendFileResponse]
+type System_SendFileClient = grpc.ServerStreamingClient[FileResponse]
 
 // SystemServer is the server API for System service.
 // All implementations must embed UnimplementedSystemServer
 // for forward compatibility.
 type SystemServer interface {
-	SendFile(*SendFileRequest, grpc.ServerStreamingServer[SendFileResponse]) error
+	SendFile(*FileRequest, grpc.ServerStreamingServer[FileResponse]) error
 	mustEmbedUnimplementedSystemServer()
 }
 
@@ -71,7 +71,7 @@ type SystemServer interface {
 // pointer dereference when methods are called.
 type UnimplementedSystemServer struct{}
 
-func (UnimplementedSystemServer) SendFile(*SendFileRequest, grpc.ServerStreamingServer[SendFileResponse]) error {
+func (UnimplementedSystemServer) SendFile(*FileRequest, grpc.ServerStreamingServer[FileResponse]) error {
 	return status.Errorf(codes.Unimplemented, "method SendFile not implemented")
 }
 func (UnimplementedSystemServer) mustEmbedUnimplementedSystemServer() {}
@@ -96,21 +96,21 @@ func RegisterSystemServer(s grpc.ServiceRegistrar, srv SystemServer) {
 }
 
 func _System_SendFile_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(SendFileRequest)
+	m := new(FileRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(SystemServer).SendFile(m, &grpc.GenericServerStream[SendFileRequest, SendFileResponse]{ServerStream: stream})
+	return srv.(SystemServer).SendFile(m, &grpc.GenericServerStream[FileRequest, FileResponse]{ServerStream: stream})
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type System_SendFileServer = grpc.ServerStreamingServer[SendFileResponse]
+type System_SendFileServer = grpc.ServerStreamingServer[FileResponse]
 
 // System_ServiceDesc is the grpc.ServiceDesc for System service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var System_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "system.System",
+	ServiceName: "System",
 	HandlerType: (*SystemServer)(nil),
 	Methods:     []grpc.MethodDesc{},
 	Streams: []grpc.StreamDesc{

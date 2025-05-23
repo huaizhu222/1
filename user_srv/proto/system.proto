@@ -1,14 +1,16 @@
 syntax = "proto3";
+
 option go_package = ".;proto";
+
+
 service System {
-  rpc SendFile(SendFileRequest) returns (stream SendFileResponse) {}
+  rpc SendFile(FileRequest) returns (stream FileResponse) {}
 }
 
-message SendFileRequest {
-  string file_path = 1; // 本地文件的绝对路径，如 "/data/video.mp4"
+message FileRequest {
+  string file_path = 1;
 }
 
-message SendFileResponse {
-  bytes chunk_data = 1; // 文件的分块二进制数据
-  int32 chunk_number = 2; // 当前块的序号（从0开始）
+message FileResponse {
+  bytes chunk = 1;
 }

@@ -12,7 +12,6 @@ import (
 	"github.com/anaskhan96/go-password-encoder"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
-	"gorm.io/gorm"
 )
 
 type User_Server struct {
@@ -31,23 +30,6 @@ func ModelToResponse(user model.User) proto.UserInfoResponse {
 	}
 	return userInfoRsp
 }
-func Paginate(page, pageSize int) func(db *gorm.DB) *gorm.DB {
-	return func(db *gorm.DB) *gorm.DB {
-		if page <= 0 {
-			page = 1
-		}
-
-		switch {
-		case pageSize > 100:
-			pageSize = 100
-		case pageSize <= 0:
-			pageSize = 10
-		}
-		offset := (page - 1) * pageSize
-		return db.Offset(offset).Limit(pageSize)
-	}
-}
-
 func (s *User_Server) GetUserById(ctx context.Context, req *proto.UserInfoResponse) (*proto.UserInfoResponse, error) {
 	var users model.User
 	result := global.DB.Where(model.User{

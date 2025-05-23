@@ -17,9 +17,9 @@ type BaseModel struct {
 type User struct {
 	BaseModel
 	User_id   uint
-	Password  string `gorm:"type:varchar(100);not null comment '密码'"`
-	NickName  string `gorm:"type:varchar(20) comment '用户名'"`
-	Role      int    `gorm:"column:role;defualt:1;type:int comment '1表示普通用户,2表示管理员'"`
-	Like      string `gorm:"type:varchar(20);not null comment '喜好'"`
+	Password  string `gorm:"type:varchar(100);not null "`
+	NickName  string `gorm:"type:varchar(20) "`
+	Role      int    `gorm:"column:role;defualt:1;type:int "`
+	Like      string `gorm:"type:varchar(20);not null "`
 	Embedding string `gorm:"type:varchar(20);"`
 }

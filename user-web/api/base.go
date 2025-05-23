@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/go-playground/validator/v10"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
@@ -41,17 +40,10 @@ func HandleGrpcErrorToHttp(err error, c *gin.Context) {
 }
 
 func HandleValidatorError(c *gin.Context, err error) {
-	errs, ok := err.(validator.ValidationErrors)
-	if !ok {
-		// 非validator.ValidationErrors类型错误直接返回
-		c.JSON(http.StatusOK, gin.H{
-			"msg": err.Error(),
-		})
-		return
-	}
-	// validator.ValidationErrors类型错误则进行翻译
+
+	// 非validator.ValidationErrors类型错误直接返回
 	c.JSON(http.StatusOK, gin.H{
-		"msg": errs,
+		"msg": err.Error(),
 	})
 	return
 }

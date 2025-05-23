@@ -1,6 +1,6 @@
 package config
 
-type MysqlConfig struct {
+type PgsqlConfig struct {
 	Host     string `mapstructure:"host" json:"host"`
 	Port     string `mapstructure:"port" json:"port"`
 	Name     string `mapstructure:"name" json:"name"`
@@ -9,7 +9,6 @@ type MysqlConfig struct {
 }
 
 type SeverConfig struct {
-	Name         string `mapstructure:"name" json:"name"`
-	MysqlConfig  `mapstructure:"mysql" json:"mysql"`
+	Name        string `mapstructure:"name" json:"name"`
+	PgsqlConfig `mapstructure:"pgsql" json:"pgsql"`
 }
-
