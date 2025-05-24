@@ -8,11 +8,10 @@ import (
 )
 
 func InitUserRouter(Rounter *gin.RouterGroup) {
-	UserRouter := Rounter.Group("/user")
+	UserRouter := Rounter.Group("/user").Use(middlewares.Trace()) // 使用链路追踪
 	{
-		// UserRouter.GET("/list", middlewares.JWTAuth(), middlewares.IsAdminAuth(), api.GetUserList)
-		UserRouter.POST("/login", api.PassWordLogin)
-		UserRouter.POST("/register", api.Register)
-		UserRouter.GET("/id", middlewares.JWTAuth(), api.GetUser)
+		UserRouter.POST("/login", api.PassWordLogin)              // 密码登录
+		UserRouter.POST("/register", api.Register)                // 注册
+		UserRouter.GET("/id", middlewares.JWTAuth(), api.GetUser) // jwt token验证 通过id查询用户信息
 	}
 }

@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 	"time"
-	"user_srv/model"
+	model "user_srv/user.sql"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"

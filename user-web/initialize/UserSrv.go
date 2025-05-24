@@ -6,6 +6,8 @@ import (
 	"user-web/global"
 	"user-web/proto"
 
+	"github.com/grpc-ecosystem/grpc-opentracing/go/otgrpc"
+	"github.com/opentracing/opentracing-go"
 	"google.golang.org/grpc"
 )
 
@@ -13,6 +15,7 @@ func InitUserConn() {
 	conn, err := grpc.Dial(
 		fmt.Sprintf("%s:%d", global.ServerConfig.UserSrvConfig.Host, global.ServerConfig.UserSrvConfig.Port), // "127.0.0.1:50051"
 		grpc.WithInsecure(), // 禁用 TLS（仅限测试环境）
+		grpc.WithUnaryInterceptor(otgrpc.OpenTracingClientInterceptor(opentracing.GlobalTracer())),
 	)
 	if err != nil {
 		log.Fatal(err)

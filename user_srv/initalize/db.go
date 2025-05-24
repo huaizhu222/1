@@ -15,7 +15,7 @@ import (
 func InitDB() {
 	c := global.ServerConfig.PgsqlConfig
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Shanghai", c.Host, c.User, c.Password, c.Name, c.Port)
-	fmt.Println(dsn)
+	// fmt.Println(dsn)
 	// 连接数据库
 	newlogger := logger.New(
 		log.New(os.Stdout, "\r\n", log.LstdFlags),
